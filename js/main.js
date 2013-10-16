@@ -75,29 +75,24 @@ function init() {
 	});
 
 	Crafty.scene("main", function() {
-
-		Crafty.c("RandomPosition", {
-			init: function() {
-				this.attr({x: Crafty.math.randomInt(WIDTH + SIZE, WIDTH * 1.5), y: Crafty.math.randomInt(0, HEIGHT - SIZE)});
-			}
-		});
 		
-		var background = Crafty.e("2D, Canvas, Image").attr({w: WIDTH, h: HEIGHT}).image(IMAGES_PATH + "background.png");
+	var background = Crafty.e("2D, Canvas, Image").attr({w: WIDTH, h: HEIGHT}).image(IMAGES_PATH + "background.png");
 
-		var entity = Crafty.e("Paddle, 2D, Canvas, Multiway, Image").
-		multiway(SPEED, {
-			LEFT_ARROW: 180,
-			RIGHT_ARROW: 0,
-			UP_ARROW: -90,
-			DOWN_ARROW: 90,
-			Z: -90,
-			S: 90,
-			Q: 180,
-			D: 0
-		}).
-	image(IMAGES_PATH + "ladybug.png").
-		attr({w: SIZE, h: SIZE});
-	entity.bind("EnterFrame", function() {
+	var entity = Crafty.e("Player, 2D, Canvas, Multiway, Image").
+	attr({x: 0, y: 0, w: SIZE, h: SIZE}).
+	multiway(SPEED, {
+		LEFT_ARROW: 180,
+		RIGHT_ARROW: 0,
+		UP_ARROW: -90,
+		DOWN_ARROW: 90,
+		Z: -90,
+		S: 90,
+		Q: 180,
+		D: 0
+	}).
+	image(IMAGES_PATH + "ladybug.png");
+	
+	entity.bind("EnterFrame", function(_frame) {
 		if (this.x < 0) {
 			this.x = 0;
 		}
@@ -112,12 +107,12 @@ function init() {
 		}
 	});
 
-	var manager = Crafty.e("2D, Summon").summon(10);
+	var manager = Crafty.e("2D, Summon").summon(0);
 
 	var score = Crafty.e("Score, 2D, DOM, Text").attr({x: 590, y: 0, w: 100, h: 50, score: 0});
-	score.bind("EnterFrame", function() {
+	score.bind("EnterFrame", function(_frame) {
 		if (GAME_OVER == false) {
-			this.score = this.score + 1;
+			this.score = this.score + 0.05 * _frame.dt;
 			Crafty("Score").each(function() {
 				this.text("Score : " + this.score);
 			});
@@ -125,9 +120,9 @@ function init() {
 	});
 
 	Crafty.e("2D, DOM, FPS, Text").
-		attr({maxValues:10}).
+		attr({x:10, y: 10, w: 100, h: 50}).
 		bind("MessureFPS", function(fps) { 
-			this.text("FPS"+fps.value); //Display Current FPS
+			this.text("FPS "+fps.value); //Display Current FPS
 		});
 	});
 
