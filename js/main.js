@@ -25,23 +25,6 @@ function init() {
 
 	Crafty.scene("end", function() {
 
-		Crafty.c("Button", {
-			init: function(){
-				this.requires('DOM, 2D, Mouse, Hoverable');
-				this.css({
-					"border": "solid thin black"
-				});
-				this.attr({h: 20, w: 60});
-				
-				this.bind("Click", function(_mouseEvent) {
-					this.onClick(_mouseEvent);
-				});
-			},
-
-			onClick: function(_mouseEvent) {
-			}
-		});
-
 		var button = Crafty.e("Button, Text").attr({x: 100, y: 100, w: 200}).
 		text("Score: " + SCORE).
 		css({"text-align": "center"});
@@ -51,6 +34,28 @@ function init() {
 		css({"text-align": "center"});
 		button.onClick = function(_mouseEvent) {
 			Crafty.scene("main");
+		};
+		
+		var postScore = Crafty.e("Button, Text").attr({x: 210, y: 140, w: 200}).
+		text("Post your score - Facebook").
+		css({"text-align": "center"});
+		postScore.onClick = function(_mouseEvent) {
+			console.log("Main - postScore");
+			FB.getLoginStatus(function(response) {
+				if (response.status === 'connected') {
+					console.log("CONNECTED");
+				} else if (response.status === 'not_authorized') {
+					FB.login(function(response) {
+						//init();
+					});
+					console.log("NOT AUTHORIZED");
+				} else {
+					FB.login(function(response) {
+						//init();
+					});
+					console.log("OTHER");
+				}
+			});
 		};
 	});
 
