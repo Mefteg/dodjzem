@@ -2,7 +2,7 @@ Crafty.c("Hoverable", {
 	_baseColor: 'gray',
 	_hoverColor: 'lightgray',
 	init: function() {
-		this.requires('Color, Mouse, Text');
+		this.requires('2D, Color, Mouse, Text');
 		this.color(this._baseColor);
 		this.bind("MouseOver", function(e){
 			this._baseColor = this.color();

@@ -3,6 +3,15 @@ var HEIGHT = 360;
 var GAME_OVER = false;
 var SCORE = 0;
 var SIZE = 20;
+var SPEED = 4;
+
+var IMAGES_PATH = "assets/images/";
+
+var IMAGES = [
+IMAGES_PATH + "ladybug.png",
+IMAGES_PATH + "bee.png",
+IMAGES_PATH + "background.png",
+];
 
 function init() {
 	Crafty.init(WIDTH, HEIGHT);
@@ -11,8 +20,10 @@ function init() {
 	// YOUR GAME CODE
 
 	Crafty.scene("loading", function() {
-		Crafty.load(["test.png"], function() {
+		Crafty.load(IMAGES, function() {
 			// load assets
+			// create sprites
+			
 			// and load the scene
 			console.log("MAIN");
 			Crafty.scene("main");
@@ -24,12 +35,14 @@ function init() {
 	});
 
 	Crafty.scene("end", function() {
+		
+		var background = Crafty.e("2D, Canvas, Image").attr({w: WIDTH, h: HEIGHT}).image(IMAGES_PATH + "background.png");
 
-		var button = Crafty.e("Button, Text").attr({x: 100, y: 100, w: 200}).
+		var button = Crafty.e("Button").attr({x: 100, y: 100, w: 200}).
 		text("Score: " + SCORE).
 		css({"text-align": "center"});
 
-		var button = Crafty.e("Button, Text").attr({x: 100, y: 140}).
+		var button = Crafty.e("Button").attr({x: 100, y: 140}).
 		text("Restart").
 		css({"text-align": "center"});
 		button.onClick = function(_mouseEvent) {
@@ -43,17 +56,19 @@ function init() {
 			console.log("Main - postScore");
 			FB.getLoginStatus(function(response) {
 				if (response.status === 'connected') {
-					console.log("CONNECTED");
+					postScoreOnFacebook(SCORE);
 				} else if (response.status === 'not_authorized') {
 					FB.login(function(response) {
-						//init();
+						if (response.status === 'connected') {
+							postScoreOnFacebook(SCORE);
+						}
 					});
-					console.log("NOT AUTHORIZED");
 				} else {
 					FB.login(function(response) {
-						//init();
+						if (response.status === 'connected') {
+							postScoreOnFacebook(SCORE);
+						}
 					});
-					console.log("OTHER");
 				}
 			});
 		};
@@ -66,9 +81,11 @@ function init() {
 				this.attr({x: Crafty.math.randomInt(WIDTH + SIZE, WIDTH * 1.5), y: Crafty.math.randomInt(0, HEIGHT - SIZE)});
 			}
 		});
+		
+		var background = Crafty.e("2D, Canvas, Image").attr({w: WIDTH, h: HEIGHT}).image(IMAGES_PATH + "background.png");
 
-		var entity = Crafty.e("Paddle, 2D, Canvas, Multiway, Color").
-		multiway(4, {
+		var entity = Crafty.e("Paddle, 2D, Canvas, Multiway, Image").
+		multiway(SPEED, {
 			LEFT_ARROW: 180,
 			RIGHT_ARROW: 0,
 			UP_ARROW: -90,
@@ -78,7 +95,7 @@ function init() {
 			Q: 180,
 			D: 0
 		}).
-	color("rgb(255, 255, 255)").
+	image(IMAGES_PATH + "ladybug.png").
 		attr({w: SIZE, h: SIZE});
 	entity.bind("EnterFrame", function() {
 		if (this.x < 0) {
@@ -118,3 +135,7 @@ function init() {
 }
 
 init();
+
+function postScoreOnFacebook(/*int*/ _score) {
+	console.log("POST SCORE ON FACEBOOK : " + _score);
+}

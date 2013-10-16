@@ -1,8 +1,9 @@
 Crafty.c("Button", {
 	init: function(){
-		this.requires('DOM, 2D, Mouse, Hoverable');
+		this.requires('DOM, Mouse, Hoverable');
 		this.css({
-			"border": "solid thin black"
+			"border": "solid thin black",
+			"line-height": "1.0"
 		});
 		this.attr({h: 20, w: 60});
 		

@@ -21,7 +21,9 @@ Crafty.c("Summon", {
 	},
 
 	createEnemy: function() {
-		var e = Crafty.e("2D, Canvas, RandomPosition, Color, Collision").color("rgb(255, 255, 255)").attr({w: SIZE, h: SIZE, dX: -5});
+		var e = Crafty.e("2D, Canvas, RandomPosition, Image, Collision").
+		attr({w: SIZE, h: SIZE, dX: (SPEED * -1)}).
+		image(IMAGES_PATH + "bee.png");
 		e.bind("EnterFrame", function() {
 			if (GAME_OVER == false) {
 				this.x += this.dX;
