@@ -12,9 +12,12 @@ Crafty.c("Summon", {
 				}
 			}
 		});
+		this.bind("Remove", function() {
+			console.log("Summon - Remove");
+		});
 	},
 
-	summon: function(_nbEnemiesAtStart) {
+	summon: function(/*int*/ _nbEnemiesAtStart) {
 		for (var i=0; i<_nbEnemiesAtStart; i++) {
 			this.createEnemy();
 		}
