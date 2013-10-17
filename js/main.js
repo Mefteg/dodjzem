@@ -2,6 +2,7 @@ var WIDTH = 690;
 var HEIGHT = 360;
 var GAME_OVER = false;
 var SCORE = 0;
+var BEST_SCORE = 0;
 var SIZE = 20;
 var SPEED = 4;
 
@@ -20,7 +21,3 @@ window.onload = function() {
 	// YOUR GAME CODE
 	Crafty.scene("loading");
 };
-
-function postScoreOnFacebook(/*int*/ _score) {
-	console.log("POST SCORE ON FACEBOOK : " + _score);
-}

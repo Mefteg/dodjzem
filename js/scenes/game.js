@@ -4,6 +4,15 @@ console.log("game - init");
 
 GAME_OVER = false;
 SCORE = 0;
+BEST_SCORE = -1;
+
+FB.getLoginStatus(function(response) {
+	if (response.status === 'connected') {
+		getScoreOnFacebook();
+	} else {
+		BEST_SCORE = 0;
+	}
+});
 		
 var background = Crafty.e("2D, Canvas, Image").attr({w: WIDTH, h: HEIGHT}).image(IMAGES_PATH + "background.png");
 
