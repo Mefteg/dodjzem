@@ -12,8 +12,6 @@ Crafty.c("Enemy", {
 		
 		this.bind("EnterFrame", function(_frame) {
 			if (GAME_OVER == false) {
-				
-				
 				if (this.collideWith(this.player) == true) {
 					console.log("GAME OVER");
 					GAME_OVER = true;
