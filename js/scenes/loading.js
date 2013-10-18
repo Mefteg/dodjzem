@@ -4,7 +4,7 @@ Crafty.scene("loading", function() {
 
 		// and load the scene
 		console.log("MAIN");
-		Crafty.scene("game");
+		Crafty.scene("landing");
 	});
 
 	Crafty.e("2D, DOM, Text").attr({w: 100, h: 20, x: 150, y: 120}).

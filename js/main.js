@@ -10,7 +10,7 @@ var IMAGES_PATH = "assets/images/";
 
 var IMAGES = [
 IMAGES_PATH + "ladybug.png",
-IMAGES_PATH + "bee.png",
+IMAGES_PATH + "bee_shadow.png",
 IMAGES_PATH + "background.png",
 ];
 
